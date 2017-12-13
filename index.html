@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<!-- HEAD -->
+<head>
+  <!-- Title on the tab -->
+  <title>Oscar Germade: Weather Application</title>
+
+  <!-- Metadata -->
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="description" content="weather app by Oscar Germade"/>
+  <meta name="author" content="Oscar Ruben Germade-Gonzalez Rios"/>
+  <meta name="keywords" content="Oscar Germade, weather app"/>
+
+  <!-- Bootstrap files -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+  <!-- FontAwsome Icons-->
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous"/>
+
+  <!-- Style -->
+  <link rel="stylesheet" href="css/frontPage.css"/>
+  <link rel="stylesheet" href="css/localWeather.css"/>
+  <link rel="stylesheet" href="css/awayWeather.css"/>
+
+  <!-- JavaScript files -->
+  <script src="js/getPosition.js"></script>
+
+  <!-- General Styling -->
+  <style>
+    * {
+      box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+    }
+  </style>
+
+</head>
+
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-6 col-sm-offset-3 text-center">
+
+        <!-- Front Page -->
+        <div id="frontPage">
+          <h1>Weather App</h1>
+          <button type="button" id="localWeather" onclick="getLocation()" data-toggle="tooltip" data-placement="bottom"
+            title="Click me to get the weather on your current location"><a href="html/localWeather.html"><i class="fa fa-map-marker fa-5x" aria-hidden="true"></i></a>
+          </button>
+
+          <button type="button" id="awayWeather" onclick="getLocation()" data-toggle="tooltip" data-placement="bottom"
+            title="Click me to get the weather on an specified location"><i class="fa fa-location-arrow fa-3x" aria-hidden="true"></i>
+            <i class="fa fa-sun-o fa-3x" aria-hidden="true"></i>
+          </button>
+        </div>
+
+        <!-- Get weather in your current location -->
+        <div class="localWeather">
+          <p id="demo"></p>
+        </div>
+        <!-- Choose a place to get its weather -->
+        <div class="awayWeather">
+          <p>Hola</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

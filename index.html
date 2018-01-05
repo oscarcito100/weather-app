@@ -21,10 +21,14 @@
   <!-- FontAwsome Icons-->
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous"/>
 
-  <!-- Style -->
+  <!-- Google Font Spectral+sc -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Slab|Spectral+SC" rel="stylesheet">
+
+  <!-- CSS Style -->
   <link rel="stylesheet" href="css/frontPage.css"/>
   <link rel="stylesheet" href="css/localWeather.css"/>
   <link rel="stylesheet" href="css/awayWeather.css"/>
+  <link rel="stylesheet" href="css/footer.css"/>
 
   <!-- JavaScript files -->
   <script src="js/getPosition.js"></script>
@@ -45,27 +49,141 @@
     <div class="row">
       <div class="col-sm-6 col-sm-offset-3 text-center">
 
-        <!-- Front Page -->
-        <div id="frontPage">
-          <h1>Weather App</h1>
-          <button type="button" id="localWeather" onclick="getLocation()" data-toggle="tooltip" data-placement="bottom"
-            title="Click me to get the weather on your current location"><a href="html/localWeather.html"><i class="fa fa-map-marker fa-5x" aria-hidden="true"></i></a>
-          </button>
+        <!-- FRONT PAGE section -->
+        <section id="frontPage">
+          <h1 id="pageTitle">Weather App</h1>
+          <!-- Message that appears when the user click the button to get his current position -->
+          <h3 id="messageLocation"></h3>
+          <!-- Display a message if geolocation is not supported by the browser or there's an error to fet user's position -->
+          <div class="alert alert-danger">
+            <p id="noGeoSupported"></p>
+          </div>
 
-          <button type="button" id="awayWeather" onclick="getLocation()" data-toggle="tooltip" data-placement="bottom"
-            title="Click me to get the weather on an specified location"><i class="fa fa-location-arrow fa-3x" aria-hidden="true"></i>
-            <i class="fa fa-sun-o fa-3x" aria-hidden="true"></i>
-          </button>
-        </div>
+          <!-- Subrow -->
+          <div class="row">
+            <!-- 1st col: container to get the weather on your current location -->
+            <div class="col-sm-6">
+              <button type="button" id="getLocalWeather">
+                <i class="fa fa-map-marker fa-5x" aria-hidden="true"></i>
+              </button>
+              <div class="textContainer">
+                <p class="textInfo">"Click the top button to get the weather on your current location"</p>
+              </div>
+            </div>
 
-        <!-- Get weather in your current location -->
-        <div class="localWeather">
-          <p id="demo"></p>
-        </div>
-        <!-- Choose a place to get its weather -->
-        <div class="awayWeather">
+            <!-- 2nd row: container to get the weather on a specified location -->
+            <div class="col-sm-6" id="awayWeatherContainer">
+              <button type="button" id="getAwayWeather">
+                <i class="fa fa-location-arrow fa-3x" aria-hidden="true"></i>
+              </button>
+              <div class="textContainer">
+                <p class="textInfo">"Click the top button to get the weather on an specified location"</p>
+              </div>
+            </div>
+          </div> <!-- End subrow -->
+
+          <!-- footer -->
+          <footer>
+            <div class="row">
+              <!-- 1st column: rights and coded by... -->
+              <div class="col-sm-6">
+                <p class="footerText">Written and coded by <a href="https://www.freecodecamp.com/oscarcito100" target="_blank" id="myName" title="Go to my profile in FreeCodeCamp">Oscar Germade.</a></p>
+                <p class="footerText">&copy; All rights reserved. 2017</p>
+              </div>
+
+              <!-- 2nd column: social media links -->
+              <div class="col-sm-6">
+                <ul class="fa-ul">
+                  <li class="socialMediaList"><a href="https://www.linkedin.com/in/oscar-ruben-germade-gonzalez-ríos-6ba5aa51" target="_blank" title="My Linkedin"><i id="linkedin" class="fa fa-fw fa-linkedin fa-3x" aria-hidden="true"></i></a></li>
+                  <li class="socialMediaList"><a href="https://www.twitter.com/oscarcito1986" target="_blank" title="My Twitter"><i id="twitter" class="fa fa-fw fa-twitter fa-3x" aria-hidden="true"></i></a></li>
+                  <li class="socialMediaList"><a href="https://www.github.com/oscarcito100" target="_blank" title="My Github"><i id="github" class="fa fa-fw fa-github fa-3x" aria-hidden="true"></i></a></li>
+                  <li class="socialMediaList"><a href="https://www.facebook.com/oscarruben.germadegonzalezrios" target="_blank" title="My Facebook"><i id="facebook" class="fa fa-fw fa-facebook-official fa-3x" aria-hidden="true"></i></a></li>
+                </ul>
+              </div>
+            </div>
+          </footer>
+        </section>
+
+        <!-- CURRENT LOCATION section
+             Get weather in your current location: Hidden by default -->
+        <section class="localWeather container-fluid">
+          <!-- Name of the city as a header -->
+          <div>
+            <span class="city"></span>
+            <span class="country"></span>
+          </div>
+
+          <!-- alert an message if weather data couldn't have been fetched -->
+          <div class="alert alert-danger">
+            <h3 class="errorWeatherMessage"></h3>
+          </div>
+
+          <!-- Panel to hold the data fetched from the api -->
+          <div class="panel panel-default panelData">
+            <!-- Heading: picture of the current weather -->
+            <div class="panel-heading">
+              <div class="row">
+                <div class="col-sm-6">
+                  <img class="img-responsive" id="weatherPicture" width="255px" height="200px"/>
+                </div>
+                <div class="col-sm-6 panelHeadingRightColumn">
+                  <div><span class="temperature"></span><span id="typeDegree">C</span></div>
+                  <div class="icon"></div>
+                  <div class="description"></div>
+                </div>
+             </div>
+            </div>
+            <!-- Body -->
+            <div class="panel-body text-left">
+              <div class="row">
+                <div class="col-sm-6 weatherFeatures">
+                  <p><strong>Minimum temperature: <span class="tempMin"></span><span class="typeDegree">C</span></strong></p>
+                  <p><strong>Maximum temperature: <span class="tempMax"></span><span class="typeDegree">C</span></strong></p>
+                  <p><strong>Pressure: <span class="pressure"></span></strong></p>
+                  <p><strong>Humidity: <span class="humidity"></span></strong></p>
+                </div>
+                <div class="col-sm-6 weatherFeatures">
+                  <p><strong>Wind speed: <span class="windSpeed"></span></strong></p>
+                  <p><strong>Clouds cover: <span class="clouds"></span></strong></p>
+                  <p><strong>Sunrise at: <span class="sunrise"></span></strong></p>
+                  <p><strong>Sunset at: <span class="sunset"></span></strong></p>
+                </div>
+              </div>
+            </div>
+            <!-- Footer -->
+            <div class="panel-footer">
+              <button id="anotherLocation" type="btn btn-primary">Choose a location</button>
+              <button id="switchTypeDegree" type="btn btn-defualt">Switch to <span id="unit">Fahrenheit</span></button>
+              <button type="button" id="tweetIt" class="btn btn-default" title="Share the weather in your location via twitter"><i class="fa fa-twitter fa-2x" aria-hidden="true"></i></button>
+            </div>
+          </div>
+
+          <!-- footer -->
+          <footer>
+            <div class="row">
+              <!-- 1st column: rights and coded by... -->
+              <div class="col-sm-6">
+                <p class="footerText">Written and coded by <a href="https://www.freecodecamp.com/oscarcito100" target="_blank" id="myName" title="Go to my profile in FreeCodeCamp">Oscar Germade.</a></p>
+                <p class="footerText">&copy; All rights reserved. 2017</p>
+              </div>
+
+              <!-- 2nd column: social media links -->
+              <div class="col-sm-6">
+                <ul class="fa-ul">
+                  <li class="socialMediaList"><a href="https://www.linkedin.com/in/oscar-ruben-germade-gonzalez-ríos-6ba5aa51" target="_blank" title="My Linkedin"><i id="linkedin" class="fa fa-fw fa-linkedin fa-3x" aria-hidden="true"></i></a></li>
+                  <li class="socialMediaList"><a href="https://www.twitter.com/oscarcito1986" target="_blank" title="My Twitter"><i id="twitter" class="fa fa-fw fa-twitter fa-3x" aria-hidden="true"></i></a></li>
+                  <li class="socialMediaList"><a href="https://www.github.com/oscarcito100" target="_blank" title="My Github"><i id="github" class="fa fa-fw fa-github fa-3x" aria-hidden="true"></i></a></li>
+                  <li class="socialMediaList"><a href="https://www.facebook.com/oscarruben.germadegonzalezrios" target="_blank" title="My Facebook"><i id="facebook" class="fa fa-fw fa-facebook-official fa-3x" aria-hidden="true"></i></a></li>
+                </ul>
+              </div>
+            </div>
+          </footer>
+        </section>
+
+        <!-- Choose a place to get its weather: Hidden by default -->
+        <section class="awayWeather">
           <p>Hola</p>
-        </div>
+        </section>
       </div>
     </div>
   </div>

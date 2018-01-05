@@ -4,14 +4,27 @@ body {
   background: -o-radial-gradient(#334046 5%, #0F1A20);
   background: radial-gradient(#334046 5%, #0F1A20);
   width: 100%;
-  height: 600px;
+  height: auto;
 }
+
 /* Title of the App */
-h1 {
-  color: #ffffff;
+#pageTitle {
+  color: #ffffff; /* white */
+  font-family: 'Spectral SC', serif;
+  font-size: 50px;
+  font-weight: bold;
+  margin-top: 50px;
 }
+
+/* Message that appears when the user click the button to get his current position */
+#messageLocation {
+  margin-top: 50px;
+  margin-bottom: 25px;
+  color: red;
+}
+
 /* Button to get your current location */
-#localWeather{
+#getLocalWeather{
   background-color: #0F1A20;
   border: 4px solid #ffffff;
   border-radius: 50%;
@@ -19,7 +32,7 @@ h1 {
   height: 125px;
   text-align: center;
 }
-#localWeather:hover {
+#getLocalWeather:hover {
   background-color: #ffffff;
   border: 4px solid #0F1A20;
 }
@@ -27,11 +40,12 @@ h1 {
 .fa-map-marker {
   color: #ffffff;
 }
-#localWeather:hover .fa-map-marker {
+#getLocalWeather:hover .fa-map-marker {
   color: #0F1A20;
 }
+
 /* button to get an specified location weather */
-#awayWeather{
+#getAwayWeather{
   background-color: #0F1A20;
   border: 4px solid #ffffff;
   border-radius: 50%;
@@ -39,17 +53,46 @@ h1 {
   height: 125px;
   text-align: center;
 }
-#awayWeather:hover {
+#getAwayWeather:hover {
   background-color: #ffffff;
   border: 4px solid #0F1A20;
 }
 /* location and sun icons */
-.fa-location-arrow, .fa-sun-o {
+.fa-location-arrow {
   color: #fff;
 }
-#awayWeather:hover .fa-location-arrow, #awayWeather:hover .fa-sun-o {
+#getAwayWeather:hover .fa-location-arrow {
   color: #0F1A20;
 }
+/* text under the buttons */
+.textContainer {
+  margin-top: 25px;
+  margin-bottom: 50px;
+  background-color: #0F1A20;
+  color: #ffffff;
+  border-radius: 5px;
+  position: relative;
+}
+.textContainer::after {
+  content: " ";
+  position: absolute;
+  bottom: 100%;  /* At the top of the tooltip */
+  left: 50%;
+  margin-left: -10px;
+  border-width: 10px;
+  border-style: solid;
+  border-color: transparent transparent #0F1A20 transparent;
+}
+.textInfo {
+    padding: 15px;
+    margin-bottom: 0;
+}
+/* no display these two sections */
 .localWeather, .awayWeather {
   display: none;
+}
+/* Display a message if geolocation is not supported by the browser or there's an error to fet user's position */
+.alert-danger {
+  display: none;
+  margin-top: 50px;
 }

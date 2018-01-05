@@ -1,0 +1,43 @@
+.footerText {
+  color: #ffffff;
+}
+/* <ul> of the social media icons */
+.fa-ul {
+	padding-left: 0;
+}
+/* each <li> social media icon */
+.socialMediaList {
+  display: inline;
+  color:#ffffff;
+}
+#myName {
+  color: red;
+}
+/* Linkedin logo*/
+#linkedin {
+	color: #ffffff;
+}
+#linkedin:hover {
+	color: #007bb6;
+}
+/* Facebook logo */
+#facebook {
+	color: #ffffff;
+}
+#facebook:hover {
+	color: #3B5998;
+}
+/* Twitter logo */
+#twitter {
+	color: #ffffff;
+}
+#twitter:hover {
+	color: #33CCFF;
+}
+/* Github logo */
+#github {
+	color: #ffffff;
+}
+#github:hover {
+	color: #000000;
+}

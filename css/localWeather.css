@@ -1,3 +1,64 @@
-#demo {
-  color: red;
+/* section to show the weather in the current location */
+.localWeather {
+  margin-top: 20px;
+}
+
+/* header that display the city and the country */
+.city, .country {
+  color: #ffffff; /* white */
+  font-family: 'Spectral SC', serif;
+  font-size: 50px;
+  font-weight: bold;
+}
+
+/* panel-heading */
+.panel-heading {
+  padding: 15px;
+}
+/* imgage of left column in the panel -heading*/
+#weatherPicture{
+  margin: auto;
+}
+.temperature, #typeDegree {
+  font-size: 80px;
+}
+.description {
+  margin-top: 10px;
+}
+
+/* panel-body: class name of each column */
+.weatherFeatures {
+  padding-left: 50px;
+}
+/* every feature of the weather */
+.tempMin, .tempMax, .pressure, .humidity, .windSpeed, .clouds, .sunrise, .sunset, .typeDegree {
+  font-size: 20px;
+}
+#anotherLocation, #switchTypeDegree {
+  text-decoration: none;
+  color: #ffffff;
+  border: 5px solid #ffffff;
+  background-color: #0F1A20;
+  border-radius: 5px;
+  padding: 15px;
+  margin: 10px;
+}
+
+#switchTypeDegree:hover, #anotherLocation:hover {
+  color: #0F1A20;
+  border: 5px solid #0F1A20;
+  background-color: #ffffff;
+}
+#tweetIt {
+	color: #55ACEE;
+  background-color: #0F1A20;
+  border: 5px solid #ffffff;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px;
+}
+#tweetIt:hover {
+  background-color: #ffffff;
+  border: 5px solid #0F1A20;
+  color: #0F1A20;
 }

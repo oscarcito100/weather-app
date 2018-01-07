@@ -34,7 +34,7 @@
 .tempMin, .tempMax, .pressure, .humidity, .windSpeed, .clouds, .sunrise, .sunset, .typeDegree {
   font-size: 20px;
 }
-#anotherLocation, #switchTypeDegree {
+.panelFooterButtons {
   text-decoration: none;
   color: #ffffff;
   border: 5px solid #ffffff;
@@ -44,12 +44,12 @@
   margin: 10px;
 }
 
-#switchTypeDegree:hover, #anotherLocation:hover {
+.panelFooterButtons:hover {
   color: #0F1A20;
   border: 5px solid #0F1A20;
   background-color: #ffffff;
 }
-#tweetIt {
+.tweetIt {
 	color: #55ACEE;
   background-color: #0F1A20;
   border: 5px solid #ffffff;
@@ -57,8 +57,7 @@
   padding: 10px;
   margin: 10px;
 }
-#tweetIt:hover {
+.tweetIt:hover {
   background-color: #ffffff;
   border: 5px solid #0F1A20;
-  color: #0F1A20;
 }

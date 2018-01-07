@@ -73,6 +73,7 @@ body {
   border-radius: 5px;
   position: relative;
 }
+/* the triangule of the text box */
 .textContainer::after {
   content: " ";
   position: absolute;

@@ -1,8 +1,8 @@
 $(document).ready(function () {
 
-  /* When the button to get the current weather location is clicked */
+  /* When the button to get the Current Weather location is clicked */
   $("#getLocalWeather").on("click", function() {
-    $(this).addClass("animate-pulse");
+    //$(this).addClass("animate-pulse");
     $("#messageLocation").html("Locating your current position...");
     getLocation();
     // when AJAX stars getting weather api
@@ -16,16 +16,53 @@ $(document).ready(function () {
     });
   });
 
+  /* When the button to get the weather in a Specified location is clicked.
+    It is in #frontPage section */
+  $("#getAwayWeather").on("click", function(){
+    $("#frontPage").hide(); // front page dissapears
+    $(".awayWeather").show(2000); // the container to display the data appears
+    $("#awayPanelData").hide();
+  });
+
   /* when button to get another location is clicked we display the awayWeather section
      to get the weather for a specified location */
   $("#anotherLocation").on("click", function(){
-    $(".localWeather").hide(1000);
+    $(".localWeather").hide();
     $(".awayWeather").show(2000);
+    $("#awayPanelData").hide();
+    $(".locationHeader").hide();
   });
 
+  /* after typing and submiting the name of a place, we get the weather for that place */
+  $("#searchLocation").on("click", function(){
+    var location = $("#location").val();
+    $(".place").text(location);
+    $(".locationHeader").show(2000);
+    $("#awayPanelData").show(2000);
+    var geoCoder =  new google.maps.Geocoder();
+    geoCoder.geocode({ 'address': location}, function(results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+        var latitude = "lat=" + results[0].geometry.location.lat();
+        var longitude = "lon=" + results[0].geometry.location.lng();
+        getWeather(latitude, longitude);
+        $(".localWeather").hide();
+      } else {
+        $(".alert-danger").show();
+        $("errorWeatherMessage").html("We couldn't get the weather for " + location + ". Please try again later!");
+      }
+    });
+  });
+
+  /* button to get back to #frontPage section from .awayWeather section */
+  $("#moveToFrontPage").on("click", function(){
+    $(".awayWeather").hide();
+    $("#frontPage").show(2000);
+  })
+
   /* Convert Celcius in Fahrenheit and viceversa */
-  $("#switchTypeDegree").on("click", function() {
-    var typeDegree = $("#typeDegree").text();
+  $(".switchTypeDegree").on("click", function() {
+    var typeDegree = $("#typeDegree").text(); // from .localWeather section
+    var typeDegree2 = $("#typeDegree2").text(); // from .awayWeather section
     var temp = $(".temperature").text();
     var temperature = parseFloat(temp);
     var tempMin = $(".tempMin").text();
@@ -33,29 +70,36 @@ $(document).ready(function () {
     var tempMax = $(".tempMax").text();
     var temperatureMax = parseFloat(tempMax);
     // if temperature is in Celcius, we convert it in Fahrenheit
-    if (typeDegree === "C") {
+    if (typeDegree === "C" || typeDegree2 === "C") {
       temperature = Math.round((temperature * (9 / 5)) + 32);
-      $(".temperature").html(temperature);
-      $("#typeDegree").html("&deg;F");
+      $(".temperature").html(temperature + "&deg");
+      $("#typeDegree").html("F");
+      $("#typeDegree2").html("F");
       temperatureMin = Math.round((temperatureMin * (9 / 5)) + 32);
-      $(".tempMin").html(temperatureMin);
-      $(".typeDegree").html("&deg;F");
+      $(".tempMin").html(temperatureMin + "&deg");
+      $(".typeDegree").html("F");
       temperatureMax = Math.round((temperatureMax * (9 / 5)) + 32);
-      $(".tempMax").html(temperatureMax);
+      $(".tempMax").html(temperatureMax + "&deg");
       $("#unit").html("Celcius");
-    } else {
+    } else if (typeDegree === "F" || typeDegree2 === "F") {
+      console.log(typeDegree);
+      console.log(typeDegree2);
       temperature = Math.round((temperature - 32) / (9 / 5));
-      $(".temperature").html(temperature);
-      $("#typeDegree").html("&deg;C");
+      $(".temperature").html(temperature + "&deg");
+      $("#typeDegree").html("C");
+      $("#typeDegree2").html("C");
       temperatureMin = Math.round((temperatureMin - 32) / (9 / 5));
-      $(".tempMin").html(temperatureMin);
-      $(".typeDegree").html("&deg;C");
+      $(".tempMin").html(temperatureMin + "&deg");
+      $(".typeDegree").html("C");
       temperatureMax = Math.round((temperatureMax - 32) / (9 / 5));
-      $(".tempMax").html(temperatureMax);
+      $(".tempMax").html(temperatureMax + "&deg");
       $("#unit").html("Fahrenheit");
+    } else {
+      console.log(typeDegree);
+      $(".alert-danger").show();
+      $("errorWeatherMessage").html("We coudn't switch the degree type");
     }
   });
-
 
   /* check if geolocation is supported */
   function getLocation() {
@@ -64,6 +108,7 @@ $(document).ready(function () {
     } else { // if not supported, display a message to the user
       $("alert-danger").show(); // show this element to display the next error message
       $("#noGeoSupported").html("<strong>I'm so sorry!</strong> Geolocation is not supported by this browser.");
+      $(".panelData").hide();
     }
   }
 
@@ -80,7 +125,7 @@ $(document).ready(function () {
     switch(error.code) {
       case error.PERMISSION_DENIED:
         $("#messageLocation").hide();
-        $("#noGeoSupported").html("User denied the request for Geolocation.<br>You can't see the weather in your current location!");
+        $("#noGeoSupported").html("User denied the request for Geolocation.<br>You can't see the weather in your current location!<br> Click the right button to get the weather in your favourite place.");
         break;
       case error.POSITION_UNAVAILABLE:
         $("#noGeoSupported").html("Location information is unavailable.");
@@ -106,7 +151,7 @@ $(document).ready(function () {
         var country = data.sys.country;
         $(".country").html(", " + country);
 
-        var temperature = data.main.temp;
+        var temperature = Math.round(data.main.temp);
         $(".temperature").html(temperature + "&deg;");
 
         $(".icon").html("<img src='" + data.weather[0].icon + "' width= 60px height=60px/>");
@@ -163,13 +208,13 @@ $(document).ready(function () {
       case (mainWeather == "snow"):
         $("#weatherPicture").attr("src", "../pictures/snow.jpg");
         break;
-      case (mainWeather == "cloudy"):
+      case (mainWeather == "clouds"):
         $("#weatherPicture").attr("src", "../pictures/cloudy.jpg");
         break;
-      case (mainWeather == "windy"):
+      case (mainWeather == "wind"):
         $("#weatherPicture").attr("src", "../pictures/windy.jpg");
         break;
-      case (mainWeather == "fog"):
+      case (mainWeather == "fog" || mainWeather == "mist"):
         $("#weatherPicture").attr("src", "../pictures/foggy.jpg");
         break;
     }
@@ -177,7 +222,7 @@ $(document).ready(function () {
 
   /* to share the weather in Twitter */
   function twitter (city, country, temperature, description){
-    $('#tweetIt').click(function() {
+    $('.tweetIt').click(function() {
       var encodedData = encodeURIComponent("I'm in " + city + ", " + country + ". The temperature is "
                         + temperature  + "ºC and it's " + description);
       var tweetUrl = "https://twitter.com/intent/tweet?text=" + encodedData;
@@ -185,7 +230,8 @@ $(document).ready(function () {
     });
   }
 });
-/*
+
+/* json response with the paramaters
 {
 "coord":{ "lon":159, "lat":35 },
 "weather":[ {
@@ -222,3 +268,17 @@ $(document).ready(function () {
 "name":"",
 "cod":200
 }*/
+
+/* Using openweather
+var urlRequest = "api.openweathermap.org/data/2.5/weather?lat=35&lon=139";
+my free key: 5736f2184df5eb73fae14a484a240533
+*/
+/*link =
+  "https://api.apixu.com/v1/forecast.json?key="+
+  apiKey+
+  "&q=" +
+  lat +
+  "+" +
+  lon +
+  "&days=5";
+*/

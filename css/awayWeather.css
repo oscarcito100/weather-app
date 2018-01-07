@@ -1,0 +1,46 @@
+#awayHeader {
+  margin-bottom: 25px;
+}
+.place {
+  color: #ffffff; /* white */
+  font-family: 'Spectral SC', serif;
+  font-size: 50px;
+  font-weight: bold;
+}
+/* text under the buttons */
+.textContainerBottomArrow {
+  margin-top: 25px;
+  margin-bottom: 25px;
+  background-color: #0F1A20;
+  color: #ffffff;
+  border-radius: 5px;
+  position: relative;
+}
+/* the triangule of the text box */
+.textContainerBottomArrow::after {
+  content: " ";
+  position: absolute;
+  top: 100%; /* At the bottom of the tooltip */
+  left: 50%;
+  margin-left: -10px;
+  border-width: 10px;
+  border-style: solid;
+  border-color: #0F1A20 transparent transparent transparent;
+}
+/* input to write a location to get the weather */
+#location {
+  font-size: 18px;
+  width: 30%;
+  padding: 10px 15px;
+  border-radius: 5px;
+  border: none;
+  border-bottom: 2px solid red;
+  outline: none;
+  -webkit-transition: width 1.0s ease-in-out;
+  -moz-transition: width 1.0s ease-in-out;
+  -o-transition: width 1.0s ease-in-out;
+  transition: width 1.0s ease-in-out;
+}
+#lcoation:focus {
+  width: 50%;
+}

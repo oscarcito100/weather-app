@@ -33,6 +33,8 @@
   <!-- JavaScript files -->
   <script src="js/getPosition.js"></script>
 
+  <!-- Google Maps API -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB04HsdTusC0LvDFvoWtDNMx5bEkSGtOjQ"></script>
   <!-- General Styling -->
   <style>
     * {
@@ -88,7 +90,7 @@
               <!-- 1st column: rights and coded by... -->
               <div class="col-sm-6">
                 <p class="footerText">Written and coded by <a href="https://www.freecodecamp.com/oscarcito100" target="_blank" id="myName" title="Go to my profile in FreeCodeCamp">Oscar Germade.</a></p>
-                <p class="footerText">&copy; All rights reserved. 2017</p>
+                <p class="footerText">&copy; All rights reserved. 2018</p>
               </div>
 
               <!-- 2nd column: social media links -->
@@ -119,7 +121,7 @@
           </div>
 
           <!-- Panel to hold the data fetched from the api -->
-          <div class="panel panel-default panelData">
+          <div class="panel panel-default panelData" id="localPanelWeather">
             <!-- Heading: picture of the current weather -->
             <div class="panel-heading">
               <div class="row">
@@ -152,9 +154,9 @@
             </div>
             <!-- Footer -->
             <div class="panel-footer">
-              <button id="anotherLocation" type="btn btn-primary">Choose a location</button>
-              <button id="switchTypeDegree" type="btn btn-defualt">Switch to <span id="unit">Fahrenheit</span></button>
-              <button type="button" id="tweetIt" class="btn btn-default" title="Share the weather in your location via twitter"><i class="fa fa-twitter fa-2x" aria-hidden="true"></i></button>
+              <button class="panelFooterButtons" id="anotherLocation" type="btn btn-primary">Choose a location</button>
+              <button class="panelFooterButtons switchTypeDegree" type="btn btn-defualt">Switch to <span id="unit">Fahrenheit</span></button>
+              <button type="button" class="tweetIt" class="btn btn-default" title="Share the weather in your location via twitter"><i class="fa fa-twitter fa-2x" aria-hidden="true"></i></button>
             </div>
           </div>
 
@@ -164,7 +166,7 @@
               <!-- 1st column: rights and coded by... -->
               <div class="col-sm-6">
                 <p class="footerText">Written and coded by <a href="https://www.freecodecamp.com/oscarcito100" target="_blank" id="myName" title="Go to my profile in FreeCodeCamp">Oscar Germade.</a></p>
-                <p class="footerText">&copy; All rights reserved. 2017</p>
+                <p class="footerText">&copy; All rights reserved. 2018</p>
               </div>
 
               <!-- 2nd column: social media links -->
@@ -182,7 +184,86 @@
 
         <!-- Choose a place to get its weather: Hidden by default -->
         <section class="awayWeather">
-          <p>Hola</p>
+          <article id="awayHeader">
+            <div class="textContainerBottomArrow">
+              <p class="textInfo">"Type a place to get its weather"</p>
+            </div>
+            <input id="location" type="text" placeholder="Type a place"/>
+
+            <button  id="searchLocation" type="submit">Submit</button>
+          </article>
+
+          <!-- Name of the city as a header -->
+          <div class="locationHeader">
+            <span class="place"></span>
+            <span class="country"></span>
+          </div>
+
+          <!-- alert an message if weather data couldn't have been fetched -->
+          <div class="alert alert-danger">
+            <h3 class="errorWeatherMessage"></h3>
+          </div>
+
+          <!-- Panel to hold the data fetched from the api -->
+          <div class="panel panel-default panelData" id="awayPanelData">
+            <!-- Heading: picture of the current weather -->
+            <div class="panel-heading">
+              <div class="row">
+                <div class="col-sm-6">
+                  <img class="img-responsive" id="weatherPicture" width="255px" height="200px"/>
+                </div>
+                <div class="col-sm-6 panelHeadingRightColumn">
+                  <div><span class="temperature"></span><span id="typeDegree2">C</span></div>
+                  <div class="icon"></div>
+                  <div class="description"></div>
+                </div>
+             </div>
+            </div>
+            <!-- Body -->
+            <div class="panel-body text-left">
+              <div class="row">
+                <div class="col-sm-6 weatherFeatures">
+                  <p><strong>Minimum temperature: <span class="tempMin"></span><span class="typeDegree">C</span></strong></p>
+                  <p><strong>Maximum temperature: <span class="tempMax"></span><span class="typeDegree">C</span></strong></p>
+                  <p><strong>Pressure: <span class="pressure"></span></strong></p>
+                  <p><strong>Humidity: <span class="humidity"></span></strong></p>
+                </div>
+                <div class="col-sm-6 weatherFeatures">
+                  <p><strong>Wind speed: <span class="windSpeed"></span></strong></p>
+                  <p><strong>Clouds cover: <span class="clouds"></span></strong></p>
+                  <p><strong>Sunrise at: <span class="sunrise"></span></strong></p>
+                  <p><strong>Sunset at: <span class="sunset"></span></strong></p>
+                </div>
+              </div>
+            </div>
+            <!-- Footer -->
+            <div class="panel-footer">
+              <button class="panelFooterButtons"  id="moveToFrontPage" type="btn btn-primary">Current Location</button>
+              <button class="panelFooterButtons switchTypeDegree" type="btn btn-defualt">Switch to <span id="unit">Fahrenheit</span></button>
+              <button type="button" class="tweetIt" class="btn btn-default" title="Share the weather in your location via twitter"><i class="fa fa-twitter fa-2x" aria-hidden="true"></i></button>
+            </div>
+          </div>
+
+          <!-- footer -->
+          <footer>
+            <div class="row">
+              <!-- 1st column: rights and coded by... -->
+              <div class="col-sm-6">
+                <p class="footerText">Written and coded by <a href="https://www.freecodecamp.com/oscarcito100" target="_blank" id="myName" title="Go to my profile in FreeCodeCamp">Oscar Germade.</a></p>
+                <p class="footerText">&copy; All rights reserved. 2018</p>
+              </div>
+
+              <!-- 2nd column: social media links -->
+              <div class="col-sm-6">
+                <ul class="fa-ul">
+                  <li class="socialMediaList"><a href="https://www.linkedin.com/in/oscar-ruben-germade-gonzalez-ríos-6ba5aa51" target="_blank" title="My Linkedin"><i id="linkedin" class="fa fa-fw fa-linkedin fa-3x" aria-hidden="true"></i></a></li>
+                  <li class="socialMediaList"><a href="https://www.twitter.com/oscarcito1986" target="_blank" title="My Twitter"><i id="twitter" class="fa fa-fw fa-twitter fa-3x" aria-hidden="true"></i></a></li>
+                  <li class="socialMediaList"><a href="https://www.github.com/oscarcito100" target="_blank" title="My Github"><i id="github" class="fa fa-fw fa-github fa-3x" aria-hidden="true"></i></a></li>
+                  <li class="socialMediaList"><a href="https://www.facebook.com/oscarruben.germadegonzalezrios" target="_blank" title="My Facebook"><i id="facebook" class="fa fa-fw fa-facebook-official fa-3x" aria-hidden="true"></i></a></li>
+                </ul>
+              </div>
+            </div>
+          </footer>
         </section>
       </div>
     </div>
